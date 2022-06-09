@@ -2,6 +2,11 @@ import Joi from "joi";
 import JoiObjectId from "joi-objectid";
 const myJoiObjectId = JoiObjectId(Joi);
 import mongoose from "mongoose";
+import { instrumentSchema } from "./instrument";
+import { nivelSchema } from "./nivel";
+import { estiloSchema } from "./estilo";
+import { cursoSchema } from "./curso";
+import { composerSchema } from "./composer";
 
 const partSchema = new mongoose.Schema({
   title: {
@@ -11,18 +16,23 @@ const partSchema = new mongoose.Schema({
     maxlength: 50,
   },
   composer: {
+    type: composerSchema,
     required: true,
   },
   instrument: {
+    type: instrumentSchema,
     required: true,
   },
   nivel: {
+    type: nivelSchema,
     required: true,
   },
   estilo: {
+    type: estiloSchema,
     required: true,
   },
   curso: {
+    type: cursoSchema,
     required: true,
   },
   pdf: {
@@ -44,7 +54,7 @@ const partSchema = new mongoose.Schema({
 
 const Part = mongoose.model("Part", partSchema);
 
-function validateMovie(movie) {
+function validatePart(part) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
     composerId: myJoiObjectId().required(),
@@ -52,8 +62,10 @@ function validateMovie(movie) {
     nivelId: myJoiObjectId().required(),
     estiloId: myJoiObjectId().required(),
     cursoId: myJoiObjectId().required(),
-    pdf: myJoiObjectId().required(),
+    pdf: Joi.string().min(5).max(200).required(),
+    audio: Joi.string().min(5).max(200).required(),
   });
+  return schema.validate(part);
 }
 
-export { Part };
+export { Part, validatePart, partSchema };
