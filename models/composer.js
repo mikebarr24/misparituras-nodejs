@@ -1,8 +1,7 @@
-import Joi from "joi";
-import joiObjectid from "joi-objectid";
-const myJoiObjectId = joiObjectid(Joi);
-import mongoose from "mongoose";
-import { estiloSchema } from "./estilo";
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
+const mongoose = require("mongoose");
+const { estiloSchema } = require("./estilo");
 
 const composerSchema = new mongoose.Schema({
   composer: {
@@ -22,8 +21,10 @@ const Composer = mongoose.model("Composer", composerSchema);
 const validateComposer = (composer) => {
   const schema = Joi.object({
     composer: Joi.string().min(5).max(50).required(),
-    estilo: myJoiObjectId(),
+    estilo: Joi.objectId(),
   });
 };
 
-export { Composer, composerSchema, validateComposer };
+exports.Composer = Composer;
+exports.composerSchema = composerSchema;
+exports.validateComposer = validateComposer;

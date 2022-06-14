@@ -1,14 +1,13 @@
-import Joi from "joi";
-import JoiObjectId from "joi-objectid";
-const myJoiObjectId = JoiObjectId(Joi);
-import mongoose from "mongoose";
-import { instrumentSchema } from "./instrument";
-import { nivelSchema } from "./nivel";
-import { estiloSchema } from "./estilo";
-import { cursoSchema } from "./curso";
-import { composerSchema } from "./composer";
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
+const mongoose = require("mongoose");
+const { instrumentSchema } = require("./instrument");
+const { nivelSchema } = require("./nivel");
+const { estiloSchema } = require("./estilo");
+const { cursoSchema } = require("./curso");
+const { composerSchema } = require("./composer");
 
-const partSchema = new mongoose.Schema({
+const partSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -25,10 +24,6 @@ const partSchema = new mongoose.Schema({
   },
   nivel: {
     type: nivelSchema,
-    required: true,
-  },
-  estilo: {
-    type: estiloSchema,
     required: true,
   },
   curso: {
@@ -57,15 +52,16 @@ const Part = mongoose.model("Part", partSchema);
 function validatePart(part) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
-    composerId: myJoiObjectId().required(),
-    instrmentId: myJoiObjectId().required(),
-    nivelId: myJoiObjectId().required(),
-    estiloId: myJoiObjectId().required(),
-    cursoId: myJoiObjectId().required(),
+    composerId: Joi.objectId().required(),
+    instrmentId: Joi.objectId().required(),
+    nivelId: Joi.objectId().required(),
+    cursoId: Joi.objectId().required(),
     pdf: Joi.string().min(5).max(200).required(),
     audio: Joi.string().min(5).max(200).required(),
   });
   return schema.validate(part);
 }
 
-export { Part, validatePart, partSchema };
+exports.Part = Part;
+exports.validatePart = validatePart;
+exports.partSchema = partSchema;

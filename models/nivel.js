@@ -1,5 +1,5 @@
-import Joi from "joi";
-import mongoose from "mongoose";
+const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const nivelSchema = new mongoose.Schema({
   nivel: {
@@ -19,4 +19,6 @@ const validateNivel = (nivel) => {
   return schema.validate(nivel);
 };
 
-export { validateNivel, nivelSchema, Nivel };
+exports.Nivel = Nivel;
+exports.nivelSchema = nivelSchema;
+exports.validateNivel = validateNivel;

@@ -1,5 +1,5 @@
-import Joi from "joi";
-import mongoose from "mongoose";
+const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const estiloSchema = new mongoose.Schema({
   estilo: {
@@ -20,4 +20,6 @@ const validateEstilo = (estilo) => {
   return schema.validate(estilo);
 };
 
-export { Estilo, estiloSchema, validateEstilo };
+exports.Estilo = Estilo;
+exports.estiloSchema = estiloSchema;
+exports.validateEstilo = validateEstilo;

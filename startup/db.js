@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import logger from "./logger.js";
-import config from "config";
+const mongoose = require("mongoose");
+const logger = require("./logger.js");
+const config = require("config");
 
-export default function () {
+module.exports = function () {
   mongoose.connect(config.get("db")).then(() => {
     logger.info(`Connected to ${config.get("db")}`);
   });
-}
+};

@@ -1,8 +1,7 @@
-import Joi from "joi";
-import mongoose from "mongoose";
-import JoiObjectId from "joi-objectid";
-import { familySchema } from "./family";
-const myJoiObjectId = JoiObjectId(Joi);
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
+const mongoose = require("mongoose");
+const { familySchema } = require("./family");
 
 const instrumentSchema = new mongoose.Schema({
   instrument: {
@@ -23,10 +22,12 @@ const validateInstrument = (instrument) => {
   const schema = Joi.object({
     instrument: {
       type: Joi.string().min(5).max(30).required(),
-      familyId: myJoiObjectId().required(),
+      familyId: Joi.objectId().required(),
     },
   });
   return schema.validate(instrument);
 };
 
-export { instrumentSchema, validateInstrument, Instrument };
+exports.Instrument = Instrument;
+exports.validateInstrument = validateInstrument;
+exports.instrumentSchema = instrumentSchema;

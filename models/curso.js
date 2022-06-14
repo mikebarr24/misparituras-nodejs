@@ -1,5 +1,5 @@
-import Joi from "joi";
-import mongoose from "mongoose";
+const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const cursoSchema = new mongoose.Schema({
   curso: {
@@ -20,4 +20,6 @@ const validateCurso = (curso) => {
   return schema.validate(curso);
 };
 
-export { Curso, cursoSchema, validateCurso };
+exports.Curso = Curso;
+exports.cursoSchema = cursoSchema;
+exports.validateCurso = validateCurso;

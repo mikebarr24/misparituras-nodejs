@@ -1,5 +1,5 @@
-import Joi from "joi";
-import mongoose from "mongoose";
+const Joi = requure("joi");
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -34,4 +34,6 @@ const validateUser = (user) => {
   });
 };
 
-export { User, userSchema, validateUser };
+exports.User = User;
+exports.userSchema = userSchema;
+exports.validateUser = validateUser;

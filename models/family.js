@@ -1,5 +1,5 @@
-import Joi from "joi";
-import mongoose from "mongoose";
+const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const familySchema = new mongoose.Schema({
   family: {
@@ -19,4 +19,6 @@ function validateFamily(family) {
   return schema.validate(family);
 }
 
-export { familySchema, validateFamily, Family };
+exports.familySchema = familySchema;
+exports.validateFamily = validateFamily;
+exports.Family = Family;
