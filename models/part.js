@@ -1,11 +1,6 @@
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const mongoose = require("mongoose");
-const { instrumentSchema } = require("./instrument");
-const { nivelSchema } = require("./nivel");
-const { estiloSchema } = require("./estilo");
-const { cursoSchema } = require("./curso");
-const { composerSchema } = require("./composer");
 
 const partSchema = mongoose.Schema({
   title: {
@@ -15,20 +10,28 @@ const partSchema = mongoose.Schema({
     maxlength: 50,
   },
   composer: {
-    type: composerSchema,
+    type: String,
     required: true,
+    minlength: 5,
+    maxlength: 50,
   },
   instrument: {
-    type: instrumentSchema,
+    type: String,
     required: true,
+    minlength: 5,
+    maxlength: 50,
   },
   nivel: {
-    type: nivelSchema,
+    type: String,
     required: true,
+    minlength: 5,
+    maxlength: 50,
   },
   curso: {
-    type: cursoSchema,
+    type: String,
     required: true,
+    minlength: 5,
+    maxlength: 50,
   },
   pdf: {
     type: String,
@@ -52,10 +55,10 @@ const Part = mongoose.model("Part", partSchema);
 function validatePart(part) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
-    composerId: Joi.objectId().required(),
-    instrmentId: Joi.objectId().required(),
-    nivelId: Joi.objectId().required(),
-    cursoId: Joi.objectId().required(),
+    composer: Joi.string().min(5).max(50).required(),
+    instrment: Joi.string().min(5).max(50).required(),
+    nivel: Joi.string().min(5).max(50).required(),
+    curso: Joi.string().min(5).max(50).required(),
     pdf: Joi.string().min(5).max(200).required(),
     audio: Joi.string().min(5).max(200).required(),
   });
