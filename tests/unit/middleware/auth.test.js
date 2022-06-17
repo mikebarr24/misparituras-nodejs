@@ -3,17 +3,34 @@ const { User } = require("../../../models/user");
 const auth = require("../../../middleware/auth");
 
 describe("auth middleware", () => {
-  it("should return a valid json web token in the req.user", () => {
-    const user = {
+  let user;
+  let token;
+  let res;
+  let next;
+  let req;
+  beforeEach(() => {
+    user = {
       _id: mongoose.Types.ObjectId().toHexString(),
       isAdmin: true,
+      isStaff: true,
     };
-    const token = new User(user).generateAuthToken();
-    const req = {
+    token = new User(user).generateAuthToken();
+    res = {};
+    next = jest.fn();
+  });
+  it("should return a valid json web token in the req.user", () => {
+    req = {
       header: jest.fn().mockReturnValue(token),
     };
-    const res = {};
-    const next = jest.fn();
+
+    auth(req, res, next);
+    expect(req.user).toMatchObject(user);
+  });
+  it("shoould return 400 if invalid token", () => {
+    req = {
+      header: jest.fn().mockReturnValue(token),
+    };
+
     auth(req, res, next);
     expect(req.user).toMatchObject(user);
   });

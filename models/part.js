@@ -36,12 +36,12 @@ const partSchema = mongoose.Schema({
   pdf: {
     type: String,
     minlength: 10,
-    maxlength: 100,
+    maxlength: 200,
   },
   audio: {
     type: String,
     minlength: 10,
-    maxlength: 100,
+    maxlength: 200,
   },
   dateCreated: {
     type: Date,
@@ -56,11 +56,11 @@ function validatePart(part) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
     composer: Joi.string().min(5).max(50).required(),
-    instrment: Joi.string().min(5).max(50).required(),
+    instrument: Joi.string().min(5).max(50).required(),
     nivel: Joi.string().min(5).max(50).required(),
     curso: Joi.string().min(5).max(50).required(),
-    pdf: Joi.string().min(5).max(200).required(),
-    audio: Joi.string().min(5).max(200).required(),
+    pdf: Joi.string().min(10).max(200).required(),
+    audio: Joi.string().min(10).max(200).required(),
   });
   return schema.validate(part);
 }
